@@ -4,21 +4,20 @@ class Usuarios {
 
     async autenticacao(req, res) {
         try {
-            let Usuario = require('../../models/cadastros/usuarios')
+            let Usuario = require('../models/usuario')
             let usuario = await Usuario.findOne({ email: req.body.usuario.toString().toLowerCase(), senha: req.body.senha })
-
             if (usuario) {
                 const jwt = require("jsonwebtoken");
                 return res.json({
                     nome: usuario.nome,
                     tipo: usuario.tipo,
-                    token: jwt.sign({ usuario: usuario._id }, "b03e148fc2d70bb33bfbbf15b7eee9e7", { expiresIn: '7d' }),
+                    token: jwt.sign({ usuario: usuario._id }, "b03e148fc2d70bb33bfbbf15b7eee9e7"),
+                    idVendedor : usuario._id
                 });
             } else {
                 res.status(500).send()
             }
         } catch (ee) {
-            console.log(ee)
             res.status(500).send()
         }
     }
@@ -56,16 +55,16 @@ class Usuarios {
         let Sorteios = require("../models/sorteios")
         let Usuario = require("../models/usuario")
         console.log(req.params)
-        let vendedores = await Sorteios.findOne({ _id : req.params.id }).populate("vendedores.vendedor")
+        let vendedores = await Sorteios.findOne({ _id: req.params.id }).populate("vendedores.vendedor")
         console.log(vendedores)
         res.send(vendedores.vendedores)
     }
 
     async vincularUsuario(req, res) {
         try {
-       
+
             let Sorteio = require("../models/sorteios")
-            let sorteio = await Sorteio.findOne({ _id: req.body.id, "vendedores.vendedor": req.body.vendedor,  "vendedores.status":  true})
+            let sorteio = await Sorteio.findOne({ _id: req.body.id, "vendedores.vendedor": req.body.vendedor, "vendedores.status": true })
 
             if (sorteio == null) {
 
@@ -85,6 +84,14 @@ class Usuarios {
         } catch {
             res.status(500).send()
         }
+    }
+
+    async trocarSenha(req, res) {
+        let Usuario = require("../models/usuario")
+        let usuario = await Usuario.findOne({ _id : req.id })
+        usuario.senha = req.body.senha
+        await usuario.save()
+        res.send()
     }
 
 }

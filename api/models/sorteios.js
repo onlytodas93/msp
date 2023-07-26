@@ -11,18 +11,19 @@ let UsuarioSchema = new Schema({
         quantidade: { type: Number, required: true },
         cartelas: [{
             status: { type: String, default: "A" }, // A- Ativo - V - Vendido
-            numero : String,
+            numeros: [{ type: String, default: "A" }],
             nome: String,
-            whatsapp : String
+            whatsapp: String
         }]
     }],
     nome: String,
     cidade: String,
-    quantidade: Number,
-    ganhador : String,
-    contatoGanhador : String,
-    numeroSorteado : String,
-    vendedor : String
+    quantidade: Number, // Quantidade de chances
+    valorCartela : Number,
+    ganhador: String,
+    contatoGanhador: String,
+    numeroSorteado: String,
+    vendedor: String
 }, { timestamps: true });
 
 module.exports = mongoose.model('sorteios', UsuarioSchema);
