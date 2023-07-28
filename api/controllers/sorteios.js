@@ -233,6 +233,20 @@ class Sorteios {
             res.status(500).send()
         }
     }
+    async selecionarIDCompra(req, res) {
+        try {
+            console.log(req.params)
+            let Sorteio = require('../models/sorteios')
+            let Usuario = require('../models/usuario')
+            let sorteio = await Sorteio.findOne({ "vendedores.cartelas._id": req.params.id }).populate("vendedores.vendedor")
+            console.log(sorteio)
+            res.send(sorteio)
+        } catch (ee) {
+            console.log(ee)
+            res.status(500).send()
+        }
+    }
+
 
     async vender(req, res) {
 

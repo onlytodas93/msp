@@ -11,6 +11,7 @@ router.post("/sorteiofinalizado", Sorteios.finalizar)
 
 router.get('/sorteios', Sorteios.selecionar);
 router.get('/sorteios/:id', Sorteios.selecionarID);
+router.get('/sorteiosid/:id', Sorteios.selecionarIDCompra);
 
 
 
