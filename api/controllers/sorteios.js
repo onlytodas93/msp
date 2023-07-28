@@ -35,15 +35,16 @@ class Sorteios {
         let dados = req.body
         let Sorteio = require('../models/sorteios')
         let sorteio = await Sorteio.findOne({ _id: dados.sorteio })
-
+        console.log(dados)
         if (dados.ganhador.length > 0) {
             sorteio.ganhador = dados.ganhador[0].nome
-            sorteio.contatoGanhador = dados.ganhador[0].nome
-            sorteio.numeroSorteado = dados.ganhador[0].numero
+            sorteio.contatoGanhador = dados.ganhador[0].whatsapp
+            sorteio.numeroSorteado = dados.numerosSorteados
             sorteio.vendedor = dados.ganhador[0].vendedor
             sorteio.status = "F"
         } else {
             sorteio.status = "FF"
+            sorteio.numeroSorteado = dados.numerosSorteados
         }
 
         await sorteio.save()
@@ -221,9 +222,11 @@ class Sorteios {
 
     async selecionarID(req, res) {
         try {
+            console.log(req.params)
             let Sorteio = require('../models/sorteios')
             let Usuario = require('../models/usuario')
             let sorteio = await Sorteio.findOne({ _id: req.params.id }).populate("vendedores.vendedor")
+            console.log(sorteio)
             res.send(sorteio)
         } catch (ee) {
             console.log(ee)
