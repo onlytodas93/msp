@@ -30,12 +30,30 @@ class Sorteios {
         res.send()
     }
 
+    async fecharVendas(req, res) {
+        let dados = req.body
+        let Sorteio = require('../models/sorteios')
+        let sorteio = await Sorteio.findOne({ _id: dados.sorteio })
+        sorteio.statusVenda = "F"
+        await sorteio.save()
+        res.send()
+    }
+
+    async abrirVendas(req, res) {
+        let dados = req.body
+        let Sorteio = require('../models/sorteios')
+        let sorteio = await Sorteio.findOne({ _id: dados.sorteio })
+        sorteio.statusVenda = "A"
+        await sorteio.save()
+        res.send()
+    }
+
     async finalizar(req, res) {
 
         let dados = req.body
         let Sorteio = require('../models/sorteios')
         let sorteio = await Sorteio.findOne({ _id: dados.sorteio })
-        console.log(dados)
+
         if (dados.ganhador.length > 0) {
             sorteio.ganhador = dados.ganhador[0].nome
             sorteio.contatoGanhador = dados.ganhador[0].whatsapp
@@ -51,6 +69,16 @@ class Sorteios {
 
         res.send()
     }
+
+
+    async excluirvendedor(req, res) {
+        let Usuario = require('../models/usuario')
+        let usuario = await Usuario.findOne({ _id: req.body.id })
+        usuario.status = false
+        await usuario.save()
+        res.send()
+    }
+
 
     async atualizarQuantidadeCartela(req, res) {
         try {
@@ -201,8 +229,8 @@ class Sorteios {
     async selecionar(req, res) {
         try {
             let Usuario = require('../models/usuario')
-            let usuario = await Usuario.findOne({ _id: req.id })
-
+            let usuario = await Usuario.findOne({ _id: req.id, status: true })
+            console.log(usuario)
             if (usuario.tipo == "A") {
                 let Sorteio = require('../models/sorteios')
                 let sorteio = await Sorteio.find({})

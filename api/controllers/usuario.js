@@ -5,7 +5,7 @@ class Usuarios {
     async autenticacao(req, res) {
         try {
             let Usuario = require('../models/usuario')
-            let usuario = await Usuario.findOne({ email: req.body.usuario.toString().toLowerCase(), senha: req.body.senha })
+            let usuario = await Usuario.findOne({ email: req.body.usuario.toString().toLowerCase(), senha: req.body.senha , status:true})
             if (usuario) {
                 const jwt = require("jsonwebtoken");
                 return res.json({
