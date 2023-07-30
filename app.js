@@ -11,7 +11,7 @@ class App {
     this.server = express();
     this.server.use(bodyParser.json());
     this.server.use(bodyParser.urlencoded({ extended: true }));
-    this.server.use(cors({ credentials: true }));
+    this.server.use(cors({}));
    
     let db_string = "mongodb+srv://razorsoftbr:bXTHq0M4jbHMSid7@master-premios.dckdjrh.mongodb.net/core?retryWrites=true&w=majority";
 
