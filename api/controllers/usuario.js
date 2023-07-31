@@ -5,14 +5,14 @@ class Usuarios {
     async autenticacao(req, res) {
         try {
             let Usuario = require('../models/usuario')
-            let usuario = await Usuario.findOne({ email: req.body.usuario.toString().toLowerCase(), senha: req.body.senha , status:true})
+            let usuario = await Usuario.findOne({ email: req.body.usuario.toString().toLowerCase(), senha: req.body.senha, status: true })
             if (usuario) {
                 const jwt = require("jsonwebtoken");
                 return res.json({
                     nome: usuario.nome,
                     tipo: usuario.tipo,
                     token: jwt.sign({ usuario: usuario._id }, "b03e148fc2d70bb33bfbbf15b7eee9e7"),
-                    idVendedor : usuario._id
+                    idVendedor: usuario._id
                 });
             } else {
                 res.status(500).send()
@@ -88,11 +88,20 @@ class Usuarios {
 
     async trocarSenha(req, res) {
         let Usuario = require("../models/usuario")
-        let usuario = await Usuario.findOne({ _id : req.id })
+        let usuario = await Usuario.findOne({ _id: req.id })
         usuario.senha = req.body.senha
         await usuario.save()
         res.send()
     }
+
+    async resetarSenha(req, res) {
+        let Usuario = require("../models/usuario")
+        let usuario = await Usuario.findOne({ _id: req.body.id })
+        usuario.senha = "123456"
+        await usuario.save()
+        res.send()
+    }
+
 
 }
 

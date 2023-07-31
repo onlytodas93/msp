@@ -6,6 +6,7 @@ router.post("/autenticacao", Usuario.autenticacao);
 router.post('/vendedor', Usuario.cadastrarVendedor);
 router.post("/vincularvendedor", Usuario.vincularUsuario);
 router.post("/trocarsenha", Usuario.trocarSenha)
+router.post("/resetarsenha", Usuario.resetarSenha)
 
 router.get('/vendedores', Usuario.selecionaVendedores);
 router.get('/vendedores/:id', Usuario.selecionaVendedoresDoSorteio);
