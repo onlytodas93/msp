@@ -52,11 +52,11 @@ class Usuarios {
     }
 
     async selecionaVendedoresDoSorteio(req, res) {
+        console.log(req.params)
         let Sorteios = require("../models/sorteios")
         let Usuario = require("../models/usuario")
-        console.log(req.params)
         let vendedores = await Sorteios.findOne({ _id: req.params.id }).populate("vendedores.vendedor")
-        console.log(vendedores)
+        console.log(vendedores.vendedores)
         res.send(vendedores.vendedores)
     }
 

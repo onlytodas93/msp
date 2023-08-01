@@ -10,6 +10,9 @@ router.post("/sorteiofinalizado", Sorteios.finalizar)
 router.post("/fecharvenda", Sorteios.fecharVendas)
 router.post("/abrirvenda", Sorteios.abrirVendas)
 router.post("/excluirvendedor", Sorteios.excluirvendedor)
+router.post("/excluirsorteio", Sorteios.excluirSorteio)
+
+
 
 router.get('/sorteios', Sorteios.selecionar);
 router.get('/sorteios/:id', Sorteios.selecionarID);

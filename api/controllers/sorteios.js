@@ -79,6 +79,14 @@ class Sorteios {
         res.send()
     }
 
+    async excluirSorteio(req, res) {
+        let Sorteio = require('../models/sorteios')
+        let sorteio = await Usuario.findOne({ _id: req.body.id })
+        sorteio.status = "E"
+        await usuario.save()
+        res.send()
+    }
+
 
     async atualizarQuantidadeCartela(req, res) {
         try {

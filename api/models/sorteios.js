@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let UsuarioSchema = new Schema({
-    status: { type: String, default: "A" }, // A - ATIVO   C - CANCELADO   F - FECHADO
+    status: { type: String, default: "A" }, // A - ATIVO   C - CANCELADO   F - FECHADO // E - excluido
     statusVenda : { type: String, default: "A" }, // A - ATIVO  F - FECHADO
     dataAbertura: { type: Date, default: Date.now() },
     dataSorteio: { type: Date },
