@@ -103,54 +103,56 @@ class Sorteios {
 
 
             console.log(quantidade)
+            if ((quantidade + dados.quantidade) <= 3333) {
 
-            if (quantidade < dados.quantidade) {
+                if (quantidade < dados.quantidade) {
 
-                let novosIngressos = dados.quantidade - quantidade // Pegar quantidade de cartelas que precisa ser adicionado
-                let qtdNumeros = sorteio.quantidade // Modelo da cartela
+                    let novosIngressos = dados.quantidade - quantidade // Pegar quantidade de cartelas que precisa ser adicionado
+                    let qtdNumeros = sorteio.quantidade // Modelo da cartela
 
-                // For master para criar os ingressos
-                for (let i = 0; i < novosIngressos; i++) {
+                    // For master para criar os ingressos
+                    for (let i = 0; i < novosIngressos; i++) {
 
-                    let novosNumeros = []
+                        let novosNumeros = []
 
-                    // for para criar os numeros                    
-                    while (novosNumeros.length != qtdNumeros) {
-                        let achou = true; // Numero não encontrado
+                        // for para criar os numeros                    
+                        while (novosNumeros.length != qtdNumeros) {
+                            let achou = true; // Numero não encontrado
 
-                        let sequencia = ""
-                        while (achou == true) {
-                            achou = false;
+                            let sequencia = ""
+                            while (achou == true) {
+                                achou = false;
 
-                            sequencia = Math.floor(Math.random() * 10) + "" + Math.floor(Math.random() * 10) + "" + Math.floor(Math.random() * 10) + "" + Math.floor(Math.random() * 10)
+                                sequencia = Math.floor(Math.random() * 10) + "" + Math.floor(Math.random() * 10) + "" + Math.floor(Math.random() * 10) + "" + Math.floor(Math.random() * 10)
 
-                            for (let i2 = 0; i2 < sorteio.vendedores.length; i2++)
-                                for (let i3 = 0; i3 < sorteio.vendedores[i2].cartelas.length; i3++)
-                                    if (sequencia == sorteio.vendedores[i2].cartelas[i3].numero)
-                                        achou = true
+                                for (let i2 = 0; i2 < sorteio.vendedores.length; i2++)
+                                    for (let i3 = 0; i3 < sorteio.vendedores[i2].cartelas.length; i3++)
+                                        if (sequencia == sorteio.vendedores[i2].cartelas[i3].numero)
+                                            achou = true
+                            }
+
+                            novosNumeros.push(sequencia)
                         }
 
-                        novosNumeros.push(sequencia)
-                    }
-
-                    for (let i2 = 0; i2 < sorteio.vendedores.length; i2++) {
-                        if (sorteio.vendedores[i2]._id == dados.vendedor) {
-                            sorteio.vendedores[i2].cartelas.push({
-                                numeros: novosNumeros
-                            })
+                        for (let i2 = 0; i2 < sorteio.vendedores.length; i2++) {
+                            if (sorteio.vendedores[i2]._id == dados.vendedor) {
+                                sorteio.vendedores[i2].cartelas.push({
+                                    numeros: novosNumeros
+                                })
+                            }
                         }
-                    }
 
+
+                    }
 
                 }
 
+                await sorteio.save()
+                res.send()
+
+            } else {
+                res.status(500).send({msg:"Quantidade máxima de cartelas não pode ser maior que 3333"})
             }
-
-            await sorteio.save()
-            res.send()
-            console.log(sorteio.vendedores[0].cartelas)
-
-
             /*
             
                         if (quantidade < dados.quantidade) {
